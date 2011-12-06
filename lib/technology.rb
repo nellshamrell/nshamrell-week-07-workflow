@@ -8,6 +8,10 @@ require 'workflow'
 class Technology
   include Workflow
   workflow do
+    state :reviewed do
+      event :approve, :transitions_to => :approved
+      event :unapproved, :transitions_to => :unapproved
+    end
     state :unapproved do
       event :approve, :transitions_to => :approved
     end
@@ -20,6 +24,10 @@ class Technology
     end
     state :retired
   end
+  
+  def review
+    puts 'technology is reviewed'
+  end
  
   def approve
     puts 'technology is approved'
@@ -29,7 +37,7 @@ class Technology
   def unapprove
     puts 'technology is unapproved'
   end
-  
+
   def publish
     puts 'technology is published'
   end

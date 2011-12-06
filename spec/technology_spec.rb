@@ -8,8 +8,22 @@ describe "states" do
 
   subject { Technology.new } 
 
-  it "should start unapproved" do
-    subject.current_state.to_s.should == "unapproved"
+  it "should start reviewed" do
+    subject.current_state.to_s.should == "reviewed"
+  end
+
+  context "when reviewed" do
+    it "should be reviewed" do
+      subject.review
+      subject.reviewed?.should == true
+      subject.current_state.to_s.should == "reviewed"
+    end
+    it "should tell us it is reviewed" do
+      expect { subject.review}.to_s == "technology is reviewed"
+    end
+    it "should not be publishable when reviewed" do
+      expect { subject.publish! }.to raise_error
+    end
   end
 
   context "when approved" do
